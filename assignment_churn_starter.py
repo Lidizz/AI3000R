@@ -7,6 +7,8 @@ from sklearn.svm import LinearSVC
 from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.metrics import confusion_matrix, classification_report
 
+from sklearn.metrics import precision_score, recall_score, f1_score
+
 # Load the customer churn data
 input_file = 'customer_churn_data.txt'
 data = np.loadtxt(input_file, delimiter=',')
@@ -80,7 +82,14 @@ print(cm_lr)
 print(classification_report(y_test, y_pred_lr, target_names=['No Churn', 'Churn']))
 
 accuracy_lr = 100.0 * (y_test == y_pred_lr).sum() / y_test.shape[0]
+precision_lr = 100 * precision_score(y_test, y_pred_lr)  # For class 1 (Churn)
+recall_lr = 100 * recall_score(y_test, y_pred_lr)
+f1_lr = 100 * f1_score(y_test, y_pred_lr)
+
 print(f"Logistic Regression Accuracy: {accuracy_lr:.2f}%")
+print(f"Logistic Regression Precision: {precision_lr:.2f}%")
+print(f"Logistic Regression Recall: {recall_lr:.2f}%")
+print(f"Logistic Regression F1-Score: {f1_lr:.2f}%")
 
 
 print("\n=== NAIVE BAYES RESULTS ===")
@@ -90,7 +99,14 @@ print(cm_nb)
 print(classification_report(y_test, y_pred_nb, target_names=['No Churn', 'Churn']))
 
 accuracy_nb = 100.0 * (y_test == y_pred_nb).sum() / y_test.shape[0]
+precision_nb = 100 * precision_score(y_test, y_pred_nb)
+recall_nb = 100 * recall_score(y_test, y_pred_nb)
+f1_nb = 100 * f1_score(y_test, y_pred_nb)
+
 print(f"Naive Bayes Accuracy: {accuracy_nb:.2f}%")
+print(f"Naive Bayes Precision: {precision_nb:.2f}%")
+print(f"Naive Bayes Recall: {recall_nb:.2f}%")
+print(f"Naive Bayes F1-Score: {f1_nb:.2f}%")
 
 
 print("\n=== LINEAR SVM RESULTS ===")
@@ -100,7 +116,14 @@ print(cm_svm)
 print(classification_report(y_test, y_pred_svm, target_names=['No Churn', 'Churn']))
 
 accuracy_svm = 100.0 * (y_test == y_pred_svm).sum() / y_test.shape[0]
-print(f"Linear SVM Accuracy: {accuracy_svm:.2f}%")  
+precision_svm = 100 * precision_score(y_test, y_pred_svm)
+recall_svm = 100 * recall_score(y_test, y_pred_svm)
+f1_svm = 100 * f1_score(y_test, y_pred_svm)
+
+print(f"Linear SVM Accuracy: {accuracy_svm:.2f}%")
+print(f"Linear SVM Precision: {precision_svm:.2f}%")
+print(f"Linear SVM Recall: {recall_svm:.2f}%")
+print(f"Linear SVM F1-Score: {f1_svm:.2f}%")
 
 # ============================================
 # TODO: Task 4 - Cross-Validation
@@ -118,10 +141,9 @@ print(f"Cross-validation accuracy: {cv_scores.mean():.3f} (+/- {cv_scores.std():
 # Comparison Summary
 # ============================================
 print("\n=== MODEL COMPARISON SUMMARY ===")
-print("Complete this table based on your results:")
 print("Model               | Accuracy | Precision | Recall | F1-Score")
 print("--------------------+----------+-----------+--------+---------")
-print(f"Logistic Regression | {accuracy_lr:.2f}%   |    0.74   |   0.46 |    0.57")
-print(f"Naive Bayes         | {accuracy_nb:.2f}%   |    0.68   |   0.43 |    0.52")
-print(f"Linear SVM          | {accuracy_svm:.2f}%   |    0.74   |   0.46 |    0.57")
+print(f"Logistic Regression | {accuracy_lr:7.2f}% | {precision_lr:8.2f}% | {recall_lr:5.2f}% | {f1_lr:7.2f}%")
+print(f"Naive Bayes         | {accuracy_nb:7.2f}% | {precision_nb:8.2f}% | {recall_nb:5.2f}% | {f1_nb:7.2f}%")
+print(f"Linear SVM          | {accuracy_svm:7.2f}% | {precision_svm:8.2f}% | {recall_svm:5.2f}% | {f1_svm:7.2f}%")
 print("\nRecommendation: Logistic Regression")
