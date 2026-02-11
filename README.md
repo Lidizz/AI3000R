@@ -32,8 +32,13 @@ Each assignment folder contains its own README with detailed instructions and re
 - Matplotlib
 - TensorFlow 2
 
+## Academic Integrity
+
+This repository contains my solutions to course assignments. While the code is public for portfolio purposes, please respect academic integrity policies if you're taking this course.
+
 ---
 
 **Course:** AI3000R  
 **Institution:** University of South-Eastern Norway (USN)  
-**Semester:** Spring 2026
+**Semester:** Spring 2026  
+**Instructor:** Ph.D. Peyman Teymoori
