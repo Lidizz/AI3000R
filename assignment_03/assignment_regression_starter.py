@@ -132,44 +132,44 @@ for i in range(len(results['degree'])):
 
 print("\n=== MODEL PERSISTENCE ===")
 # Save the best model (choose based on your results)
-# best_model = linear_regressor  # or one of your polynomial models
-# output_model_file = 'sales_model.pkl'
-# with open(output_model_file, 'wb') as f:
-#     pickle.dump(best_model, f)
-# print(f"Model saved to {output_model_file}")
+best_model = linear_regressor  # or one of your polynomial models
+output_model_file = 'sales_model.pkl'
+with open(output_model_file, 'wb') as f:
+    pickle.dump(best_model, f)
+print(f"Model saved to {output_model_file}")
 
 # Load and test
-# with open(output_model_file, 'rb') as f:
-#     loaded_model = pickle.load(f)
-# test_prediction = loaded_model.predict(X_test[:1])
-# print(f"Test prediction with loaded model: ${test_prediction[0]:.2f}")
+with open(output_model_file, 'rb') as f:
+    loaded_model = pickle.load(f)
+test_prediction = loaded_model.predict(X_test[:1])
+print(f"Test prediction with loaded model: ${test_prediction[0]:.2f}")
 
 
 print("\n=== SINGLE VARIABLE REGRESSION ===")
 # Use only Marketing Spend (column 0)
-# X_train_single = X_train[:, 0:1]
-# X_test_single = X_test[:, 0:1]
+X_train_single = X_train[:, 0:1]
+X_test_single = X_test[:, 0:1]
 
-# single_regressor = linear_model.LinearRegression()
-# single_regressor.fit(X_train_single, y_train)
-# y_test_pred_single = single_regressor.predict(X_test_single)
+single_regressor = linear_model.LinearRegression()
+single_regressor.fit(X_train_single, y_train)
+y_test_pred_single = single_regressor.predict(X_test_single)
 
-# r2_single = sm.r2_score(y_test, y_test_pred_single)
-# print(f"Single variable R2 score: {r2_single:.3f}")
-# print(f"Multivariate R2 score: {sm.r2_score(y_test, y_test_pred_linear):.3f}")
-# print(f"Improvement from additional features: {(sm.r2_score(y_test, y_test_pred_linear) - r2_single):.3f}")
+r2_single = sm.r2_score(y_test, y_test_pred_single)
+print(f"Single variable R2 score: {r2_single:.3f}")
+print(f"Multivariate R2 score: {sm.r2_score(y_test, y_test_pred_linear):.3f}")
+print(f"Improvement from additional features: {(sm.r2_score(y_test, y_test_pred_linear) - r2_single):.3f}")
 
 # Plot single variable regression
-# plt.figure(figsize=(10, 6))
-# plt.scatter(X_test_single, y_test, color='blue', alpha=0.5, label='Actual')
-# plt.plot(X_test_single, y_test_pred_single, color='red', linewidth=2, label='Predicted')
-# plt.xlabel('Marketing Spend ($)')
-# plt.ylabel('Weekly Sales ($)')
-# plt.title('Single Variable Regression: Marketing Spend vs Sales')
-# plt.legend()
-# plt.tight_layout()
-# plt.savefig('single_variable_regression.png', dpi=100)
-# print("Plot saved as 'single_variable_regression.png'")
+plt.figure(figsize=(10, 6))
+plt.scatter(X_test_single, y_test, color='blue', alpha=0.5, label='Actual')
+plt.plot(X_test_single, y_test_pred_single, color='red', linewidth=2, label='Predicted')
+plt.xlabel('Marketing Spend ($)')
+plt.ylabel('Weekly Sales ($)')
+plt.title('Single Variable Regression: Marketing Spend vs Sales')
+plt.legend()
+plt.tight_layout()
+plt.savefig('single_variable_regression.png', dpi=100)
+print("Plot saved as 'single_variable_regression.png'")
 
 
 # ============================================
@@ -177,8 +177,12 @@ print("\n=== SINGLE VARIABLE REGRESSION ===")
 # ============================================
 print("\n=== YOUR ANALYSIS ===")
 print("1. Which model performs best?")
-print("   [Your answer here]")
+print("   Linear Regression")
 print("\n2. Is there evidence of overfitting?")
-print("   [Your answer here]")
+print("   Yes, Polynomial regression models show worse performance as degree increases, indicating overfitting without generalization improvement.")
 print("\n3. What would you recommend to the business?")
-print("   [Your answer here]")
+print(
+    "   Increase website traffic - it had the strongest correlation with sales.\n"
+    "   Continue using a simple linear regression model.\n"
+    "   Re-evaluate social media engagement, as current measures are not effective enough to drive sales."
+)
