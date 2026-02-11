@@ -29,7 +29,12 @@ print("2: Social Media Engagement")
 
 # Split data into training (80%) and testing (20%)
 num_training = int(0.8 * len(X))
-X_train, y_train = X[:num_training], y[:num_training]
+
+# 1. We calculate the number of training samples by taking 80% of the total number of samples in X (which is the number of rows).
+# 2. We then split the dataset into training and testing sets using slicing. 
+#   The first 80% of the data is assigned to X_train and y_train, while the remaining 20% is assigned to X_test and y_test.
+X_train, y_train = X[:num_training], y[:num_training] 
+# 3. Like mentioned in point 2: the remaining 20% of the data is assigned to X_test and y_test.
 X_test, y_test = X[num_training:], y[num_training:]
 
 print(f"\nTraining samples: {len(X_train)}")
@@ -37,7 +42,12 @@ print(f"Testing samples: {len(X_test)}")
 
 # Calculate correlation coefficients
 print("\n=== Correlation with Sales ===")
+# We loop through each feature (Marketing Spend, Website Traffic, Social Media Engagement) and calculate the correlation coefficient with the target variable (Sales) using np.corrcoef.
+# The correlation coefficient is a measure of the linear relationship between two variables, with values ranging from -1 (perfect negative correlation) to +1 (perfect positive correlation). A value close to 0 indicates little to no linear correlation.
+# We print the correlation coefficient for each feature, rounded to three decimal places, to understand how strongly each feature is correlated with sales.
+# The output will show the correlation of each feature with sales, which can help us identify which features are most influential in predicting sales.
 for i, feature_name in enumerate(['Marketing Spend', 'Website Traffic', 'Social Media Engagement']):
+    # We calculate the correlation coefficient between the i-th feature (X[:, i]) and the target variable (y) using np.corrcoef, which returns a 2x2 matrix. We extract the correlation coefficient from this matrix using [0, 1].
     correlation = np.corrcoef(X[:, i], y)[0, 1]
     print(f"{feature_name}: {correlation:.3f}")
 
@@ -58,16 +68,17 @@ plt.close()
 # ============================================
 
 print("\n=== LINEAR REGRESSION ===")
-# Your code here:
-# linear_regressor = linear_model.LinearRegression()
-# linear_regressor.fit(X_train, y_train)
-# y_test_pred_linear = linear_regressor.predict(X_test)
+linear_regressor = linear_model.LinearRegression()
+linear_regressor.fit(X_train, y_train)
+y_test_pred_linear = linear_regressor.predict(X_test)
 
 # Calculate metrics
-# print("Mean Absolute Error =", round(sm.mean_absolute_error(y_test, y_test_pred_linear), 2))
-# print("Mean Squared Error =", round(sm.mean_squared_error(y_test, y_test_pred_linear), 2))
-# print("R2 Score =", round(sm.r2_score(y_test, y_test_pred_linear), 2))
-# print("Explained Variance Score =", round(sm.explained_variance_score(y_test, y_test_pred_linear), 2))
+print("\nLinear Regression Performance:")
+print("Mean Absolute Error =", round(sm.mean_absolute_error(y_test, y_test_pred_linear), 2))
+print("Mean Squared Error =", round(sm.mean_squared_error(y_test, y_test_pred_linear), 2))
+print("Median Absolute Error =", round(sm.median_absolute_error(y_test, y_test_pred_linear), 2))
+print("R2 Score =", round(sm.r2_score(y_test, y_test_pred_linear), 2))
+print("Explained Variance Score =", round(sm.explained_variance_score(y_test, y_test_pred_linear), 2))
 
 
 # ============================================
@@ -81,39 +92,38 @@ results = {'degree': [], 'MAE': [], 'MSE': [], 'R2': [], 'EVS': []}
 
 for degree in [2, 3, 5]:
     print(f"\nDegree {degree}:")
-    # Your code here:
-    # polynomial = PolynomialFeatures(degree=degree)
-    # X_train_poly = polynomial.fit_transform(X_train)
-    # X_test_poly = polynomial.transform(X_test)
+    polynomial = PolynomialFeatures(degree=degree)
+    X_train_poly = polynomial.fit_transform(X_train)
+    X_test_poly = polynomial.transform(X_test)
     
-    # poly_model = linear_model.LinearRegression()
-    # poly_model.fit(X_train_poly, y_train)
-    # y_test_pred_poly = poly_model.predict(X_test_poly)
+    poly_model = linear_model.LinearRegression()
+    poly_model.fit(X_train_poly, y_train)
+    y_test_pred_poly = poly_model.predict(X_test_poly)
     
     # Calculate and store metrics
-    # mae = round(sm.mean_absolute_error(y_test, y_test_pred_poly), 2)
-    # mse = round(sm.mean_squared_error(y_test, y_test_pred_poly), 2)
-    # r2 = round(sm.r2_score(y_test, y_test_pred_poly), 2)
-    # evs = round(sm.explained_variance_score(y_test, y_test_pred_poly), 2)
+    mae = round(sm.mean_absolute_error(y_test, y_test_pred_poly), 2)
+    mse = round(sm.mean_squared_error(y_test, y_test_pred_poly), 2)
+    r2 = round(sm.r2_score(y_test, y_test_pred_poly), 2)
+    evs = round(sm.explained_variance_score(y_test, y_test_pred_poly), 2)
     
-    # results['degree'].append(degree)
-    # results['MAE'].append(mae)
-    # results['MSE'].append(mse)
-    # results['R2'].append(r2)
-    # results['EVS'].append(evs)
+    results['degree'].append(degree)
+    results['MAE'].append(mae)
+    results['MSE'].append(mse)
+    results['R2'].append(r2)
+    results['EVS'].append(evs)
     
-    # print(f"  MAE: {mae}")
-    # print(f"  MSE: {mse}")
-    # print(f"  R2: {r2}")
-    # print(f"  EVS: {evs}")
+    print(f"  MAE: {mae}")
+    print(f"  MSE: {mse}")
+    print(f"  R2: {r2}")
+    print(f"  EVS: {evs}")
     pass
 
 # Print comparison table
 print("\n=== COMPARISON TABLE ===")
 print("Degree | MAE     | MSE      | R2    | EVS")
 print("-------+---------+----------+-------+-----")
-# for i in range(len(results['degree'])):
-#     print(f"  {results['degree'][i]}    | {results['MAE'][i]:7.2f} | {results['MSE'][i]:8.2f} | {results['R2'][i]:.3f} | {results['EVS'][i]:.3f}")
+for i in range(len(results['degree'])):
+    print(f"  {results['degree'][i]}    | {results['MAE'][i]:7.2f} | {results['MSE'][i]:8.2f} | {results['R2'][i]:.3f} | {results['EVS'][i]:.3f}")
 
 
 # ============================================

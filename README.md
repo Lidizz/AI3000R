@@ -8,9 +8,9 @@ This course focuses on the impact of Artificial Intelligence on organizations an
 
 ## Repository Structure
 ```
-├── assignment-1/          # What Is Intelligence? - Philosophical exploration
-├── assignment-2/          # Customer Churn Prediction - Classification project
-├── assignment-3/          # Sales Forecasting - Regression analysis
+├── assignment_01/          # What Is Intelligence? - Philosophical exploration
+├── assignment_02/          # Customer Churn Prediction - Classification project
+├── assignment_03/          # Sales Forecasting - Regression analysis
 └── README.md
 ```
 
